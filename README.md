@@ -1,19 +1,46 @@
-# SMART ATTENDANCE MANAGEMENT SYSTEM USING OPEN CV
-**A smart attendance marking and management system using Face Recognition with OpenCV.**
+# Smart IoT Gateway with Real-Time Proxy Server for Edge Agriculture Devices
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)   
+SIGR is an intelligence/smart/automatic planting system in the agricultural greenhouse which is base on IoT technology.   
+It consists of sensors, terminal device(STM32 MCU), gateway(RPi), Web server.   
+This system adopted LoRa, MQTT, GSM module, Django web framework, echarts, bootstrap and ajax.   
+Most of the source codes are implemented by Python.  
 
-The user can:
-- Test camera function
-- Capture images
-- Train images
-- Recognize faces for attendance
+## Features:
+- **Environmental Monitoring**    
+  Show environment information, such as air temperature, humility, light intensity, soil moisture, water level, raining volume.
+- **Irrigating Remotely**   
+  Control pump to irrigate by 3 methods, auto, manual or regularly.
+- **Security System**   
+  Trigger alarm while detecting signal from IR sensor.
+- **Light Controlling**   
+  Control light by 3 methods, auto, manual or regularly.
+- **Devices Tracking**   
+  Show the online status, battery of all the hardware devices.
+- **File Mangement**    
+  Mange database file of gateway.
 
-## Key features:
+## Project Diagram:
+![Alt text](https://github.com/Python-IoT/Smart-IoT-Planting-System/blob/master/arch/arch-diagram.png)
 
-1. User-friendly interface (consider using a GUI library like Tkinter or PyQt for a graphical interface).
-2. Customizable settings for authentication methods and data storage.
-3. Clear instructions on installation, configuration, and usage.
-4. Comprehensive code structure with well-documented functions.
-5. Efficient data storage format (CSV or database recommended).
-6. Optional reporting functionality to generate attendance reports (consider libraries like pandas for data analysis and report generation).
+## Hardware Lists:
+![Alt text](https://github.com/Python-IoT/Smart-IoT-Planting-System/blob/master/arch/Hardware-kit-2.jpg)
 
-## Developed by Priyanshu Yadav 2nd Btech ET HBTU Kanpur
+## Obtain Hardware:   
+Contact me by mail, linkedin.   
+Mail: priyanshs.ece@gmail.com    
+Linkedin: priyanshuhbti   
+Credits for Hardware : Deepika Yadav, Secretary, AutoRob CLub ,HBTI Kanpur 
+
+## Deployment Steps:
+- download source code
+- obtain hardware kits
+- TYPBoard wiring and firmware download
+- gateway(raspberryPi) wiring and software deployment and application running
+- deploy source code of cloud on server and execute it
+- test the system via browser
+
+## Cloud UI:
+![Alt text](https://github.com/Python-IoT/Smart-IoT-Planting-System/blob/master/arch/environment.png)
+
+
+
