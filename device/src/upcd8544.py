@@ -1,17 +1,22 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 """
 MicroPython PCD8544 driver
 (for Nokia 5110 displays)
 """
 
-__author__     = "Markus Birth"
-__copyright__  = "Copyright 2015, Markus Birth"
-__credits__    = ["Markus Birth"]
-__license__    = "MIT"
-__version__    = "1.0"
+import chinese
+import font
+import time
+import struct
+import sys
+__author__ = "Markus Birth"
+__copyright__ = "Copyright 2015, Markus Birth"
+__credits__ = ["Markus Birth"]
+__license__ = "MIT"
+__version__ = "1.0"
 __maintainer__ = "Markus Birth"
-__email__      = "markus@birth-online.de"
-__status__     = "Production"
+__email__ = "markus@birth-online.de"
+__status__ = "Production"
 
 # Datasheet: https://www.sparkfun.com/datasheets/LCD/Monochrome/Nokia5110.pdf
 # Inspiration from:
@@ -56,50 +61,45 @@ __status__     = "Production"
 
 try:
     import pyb as machine
-except:
+except BaseException:
     # WiPy
     import machine
-    
-import sys
-import struct
-import time
-import font
-import chinese
+
 
 class PCD8544:
     ADDRESSING_HORIZ = 0x00
-    ADDRESSING_VERT  = 0x02
+    ADDRESSING_VERT = 0x02
     INSTR_BASIC = 0x00
-    INSTR_EXT   = 0x01
-    POWER_UP   = 0x00
+    INSTR_EXT = 0x01
+    POWER_UP = 0x00
     POWER_DOWN = 0x04
-    DISPLAY_BLANK   = 0x08
-    DISPLAY_ALL     = 0x09
-    DISPLAY_NORMAL  = 0x0c
+    DISPLAY_BLANK = 0x08
+    DISPLAY_ALL = 0x09
+    DISPLAY_NORMAL = 0x0c
     DISPLAY_INVERSE = 0x0d
     TEMP_COEFF_0 = 0x04
     TEMP_COEFF_1 = 0x05
     TEMP_COEFF_2 = 0x06
     TEMP_COEFF_3 = 0x07
-    BIAS_1_4  = 0x17   # 1/4th
-    BIAS_1_5  = 0x16   # 1/5th
-    BIAS_1_6  = 0x15   # 1/6th
-    BIAS_1_7  = 0x14   # 1/7th
-    BIAS_1_8  = 0x13   # 1/8th
-    BIAS_1_9  = 0x12   # 1/9th
+    BIAS_1_4 = 0x17   # 1/4th
+    BIAS_1_5 = 0x16   # 1/5th
+    BIAS_1_6 = 0x15   # 1/6th
+    BIAS_1_7 = 0x14   # 1/7th
+    BIAS_1_8 = 0x13   # 1/8th
+    BIAS_1_9 = 0x12   # 1/9th
     BIAS_1_10 = 0x11   # 1/10th
     BIAS_1_11 = 0x10   # 1/11th
 
     def __init__(self, spi, rst, ce, dc, light, pwr=None):
-        self.width  = 84
+        self.width = 84
         self.height = 48
-        self.power      = self.POWER_DOWN
+        self.power = self.POWER_DOWN
         self.addressing = self.ADDRESSING_HORIZ
-        self.instr      = self.INSTR_BASIC
+        self.instr = self.INSTR_BASIC
         self.display_mode = self.DISPLAY_BLANK
         self.temp_coeff = self.TEMP_COEFF_0
-        self.bias       = self.BIAS_1_11
-        self.voltage    = 3060
+        self.bias = self.BIAS_1_11
+        self.voltage = 3060
 
         # init the SPI bus and pins
         spi.init(spi.MASTER, baudrate=328125, bits=8, polarity=0, phase=1, firstbit=spi.MSB)
@@ -120,12 +120,12 @@ class PCD8544:
             if pwr:
                 pwr.init(pwr.OUT, None)
 
-        self.spi   = spi
-        self.rst   = rst
-        self.ce    = ce
-        self.dc    = dc
+        self.spi = spi
+        self.rst = rst
+        self.ce = ce
+        self.dc = dc
         self.light = light
-        self.pwr   = pwr
+        self.pwr = pwr
 
         self.light_off()
         self.power_on()
@@ -135,7 +135,6 @@ class PCD8544:
         self.clear()
         self.lcd_font = font.FONT6_8()
         self.chinese = chinese.CN_UTF8()
-
 
     def _set_function(self):
         """ Write current power/addressing/instructionset values to lcd. """
@@ -238,16 +237,16 @@ class PCD8544:
     def reset(self):
         """ issue reset impulse to reset the display """
         self.rst.value(0)  # RST on
-        self.sleep_us(100) # reset impulse has to be >100 ns and <100 ms
+        self.sleep_us(100)  # reset impulse has to be >100 ns and <100 ms
         self.rst.value(1)  # RST off
         # Defaults after reset:
-        self.power      = self.POWER_DOWN
+        self.power = self.POWER_DOWN
         self.addressing = self.ADDRESSING_HORIZ
-        self.instr      = self.INSTR_BASIC
+        self.instr = self.INSTR_BASIC
         self.display_mode = self.DISPLAY_BLANK
         self.temp_coeff = self.TEMP_COEFF_0
-        self.bias       = self.BIAS_1_11
-        self.voltage    = 3060
+        self.bias = self.BIAS_1_11
+        self.voltage = 3060
 
     def power_off(self):
         self.clear()
@@ -256,7 +255,7 @@ class PCD8544:
         # 0x08 - set display to blank (doesn't delete contents)
         self.sleep_ms(10)
         if self.pwr:
-            self.pwr.value(0) # turn off power
+            self.pwr.value(0)  # turn off power
 
     def command(self, arr):
         """ send bytes in command mode """
@@ -268,13 +267,13 @@ class PCD8544:
 
     def bitmap(self, arr, dc):
         self.dc.value(dc)
-        buf = struct.pack('B'*len(arr), *arr)
-        self.ce.value(0) # set chip to listening/enable
+        buf = struct.pack('B' * len(arr), *arr)
+        self.ce.value(0)  # set chip to listening/enable
         try:
             self.spi.send(buf)
-        except AttributeError: 
+        except AttributeError:
             self.spi.write(buf)
-        self.ce.value(1) # set chip to disable
+        self.ce.value(1)  # set chip to disable
 
     def light_on(self):
         self.light.value(0)  # pull to GND
@@ -283,28 +282,28 @@ class PCD8544:
         self.light.value(1)  # set to HIGH
 
     def lcd_write_string(self, string, x, y):
-        self.position(x,y)
+        self.position(x, y)
         for i in string:
             self.data(self.lcd_font.get_font6_8(i))
-    
-    def lcd_write_chineses(str,x,y,space = 9):
+
+    def lcd_write_chineses(str, x, y, space=9):
         # i,j=0,0
         # lsLen = len(str)
         # while (j<lsLen)
-            # self.lcd_write_chinese(str[j],x+(i*space),y)
-            # i+=1
-            # j+=1
+        # self.lcd_write_chinese(str[j],x+(i*space),y)
+        # i+=1
+        # j+=1
         return 0
-    
-    def lcd_write_chinese(self,data,x,y):
-        #获取 字 的UTF8码
-        code = 0x00 #赋初值
+
+    def lcd_write_chinese(self, data, x, y):
+        # 获取 字 的UTF8码
+        code = 0x00  # 赋初值
         data_code = data.encode("UTF-8")
-        code |= data_code[0]<<16
-        code |= data_code[1]<<8
+        code |= data_code[0] << 16
+        code |= data_code[1] << 8
         code |= data_code[2]
-        #获取 字 的UTF8码 END
-        self.position(x,y)
-        self.data(self.chinese.get_chinese_utf8(code,0))
-        self.position(x,y+1)
-        self.data(self.chinese.get_chinese_utf8(code,1))
+        # 获取 字 的UTF8码 END
+        self.position(x, y)
+        self.data(self.chinese.get_chinese_utf8(code, 0))
+        self.position(x, y + 1)
+        self.data(self.chinese.get_chinese_utf8(code, 1))

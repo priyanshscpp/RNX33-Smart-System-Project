@@ -23,12 +23,12 @@ def getImagesAndLabels(path):
 
 def TrainImages():
     recognizer = cv2.face.LBPHFaceRecognizer_create()
-    harcascadePath = "haarcascade_default.xml"
-    detector = cv2.CascadeClassifier(harcascadePath)
+    # TODO: Unused variable, remove or use. # harcascadePath = "haarcascade_default.xml"
+    # TODO: Unused variable, remove or use. # detector = cv2.CascadeClassifier(harcascadePath)
     faces, Id = getImagesAndLabels("TrainingImage")
-    Thread(target = recognizer.train(faces, np.array(Id))).start()
-    Thread(target = counter_img("TrainingImage")).start()
-    recognizer.save("TrainingImageLabel"+os.sep+"Trainner.yml")
+    Thread(target=recognizer.train(faces, np.array(Id))).start()
+    Thread(target=counter_img("TrainingImage")).start()
+    recognizer.save("TrainingImageLabel" + os.sep + "Trainner.yml")
     print("All Images")
 
 

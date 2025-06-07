@@ -45,29 +45,41 @@ def mainMenu():
     exit
 
 # camera test function from check camera.py file
+
+
 def checkCamera():
     check_camera.camer()
-    key = input("Enter any key to return main menu ")
+    # TODO: Unused variable, remove or use. # key = input("Enter any key to return main menu ")
+    input("Enter any key to return main menu ")  # Keep the input call
     mainMenu()
 
 # image function form capture image.py file
+
+
 def CaptureFaces():
     capture_image.takeImages()
-    key = input("Enter any key to return main menu")
+    # TODO: Unused variable, remove or use. # key = input("Enter any key to return main menu")
+    input("Enter any key to return main menu")  # Keep the input call
     mainMenu()
 
 # train images from train_images.py file
+
+
 def Trainimages():
     train_image.TrainImages()
-    key = input("Enter any key to return main menu")
+    # TODO: Unused variable, remove or use. # key = input("Enter any key to return main menu")
+    input("Enter any key to return main menu")  # Keep the input call
     mainMenu()
 
 # recognize_attendance from recognize.py file
+
+
 def recognizeFaces():
     recognize.recognize_attendence()
-    key = input("Enter any key to return main menu")
+    # TODO: Unused variable, remove or use. # key = input("Enter any key to return main menu")
+    input("Enter any key to return main menu")  # Keep the input call
     mainMenu()
+
 
 # main driver
 mainMenu()
-
