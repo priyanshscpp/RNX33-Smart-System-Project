@@ -1,0 +1,21 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    device/src,
+    device/firmware,
+    device/TPYboard,
+    docs,
+    esp32,
+    tests/mocks,
+    examples/notebooks/env
+# E501: line too long
+# W503: line break before binary operator (black prefers this)
+# E203: whitespace before ':' (black prefers this)
+ignore = E501, W503, E203
+per-file-ignores =
+    cloud/platform/sips/sips/settings.py:E501
+max-line-length = 88
+# Increase complexity if needed, but start with default
+# max-complexity = 10

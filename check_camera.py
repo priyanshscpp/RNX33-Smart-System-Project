@@ -15,12 +15,11 @@ def camer():
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # Detect the faces
-        faces = cascade_face.detectMultiScale(gray, 1.3, 5, minSize=(30, 30),flags = cv2.CASCADE_SCALE_IMAGE)
+        faces = cascade_face.detectMultiScale(gray, 1.3, 5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
 
         # Draw the rectangle around each face
         for (a, b, c, d) in faces:
-            cv2.rectangle(img, (a, b), (a + c, b + d), (10,159,255), 2)
-
+            cv2.rectangle(img, (a, b), (a + c, b + d), (10, 159, 255), 2)
 
         # Display
         cv2.imshow('Webcam Check', img)
